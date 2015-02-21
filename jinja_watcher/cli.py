@@ -10,7 +10,7 @@ from .util import render, read_from_json
 __all__ = 'cli',
 
 @click.command()
-@click.option('--dest', 'dest', default='./',
+@click.option('--dest', 'dest', default='.',
               type=click.Path(exists=True),
               help='destination of compiled file')
 @click.option('--env', 'env', default={})
@@ -23,7 +23,7 @@ def cli(dest, env, src, excludes, verbose, watch):
     if src.endswith('.json'):
         config = read_from_json(src)
         src = config['src']
-        dest = config.get('dest', '.')
+        dest = config.get('dest', dest)
         excludes = config.get('excludes', [])
         env = config.get('env', {})
         watch = config.get('watch', watch)
