@@ -4,15 +4,15 @@ import ast
 
 
 install_requires = [
-    'click == 3.3'
+    'click >= 3.3, < 4.0', 'watchdog >= 0.8.3, < 1.0', 'jinja2 >= 2.7',
 ]
 
 test_require = [
-    'pytest == 2.6.4',
+    'pytest >= 2.6.4',
 ]
 
 docs_require = [
-    'sphinx == 1.2.3',
+    'sphinx >= 1.2.3',
 ]
 
 def get_version(filename):
