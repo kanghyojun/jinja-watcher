@@ -19,7 +19,8 @@ class JinjaFileEventHandler(FileSystemEventHandler):
     def log(self, event, name):
         what = 'directory' if event.is_directory else 'file'
         if self.verbose:
-            print('{} {} {}'.format(what, event.src_path, name))
+            print('[{}] {} {} {}'.format(self.now(), what,
+                                         event.src_path, name))
 
     def on_moved(self, event):
         super(JinjaFileEventHandler, self).on_moved(event)
@@ -38,7 +39,10 @@ class JinjaFileEventHandler(FileSystemEventHandler):
         if event.is_directory:
             render(event.src_path, self.dest, self.env, self.excludes)
             if self.verbose:
-                print('compiled')
+                print('[{}] compiled'.format(self.now()))
+
+    def now(self):
+        return datetime.now().strftime('%Y-%m-%d %H:%M')
 
 
 def start(path, handler):
