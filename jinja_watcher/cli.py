@@ -5,7 +5,7 @@
 import click
 
 from .watch import JinjaFileEventHandler, start
-from .util import render, read_from_json
+from .util import render, read_from_json, context_from_file
 
 __all__ = 'cli',
 
@@ -28,6 +28,8 @@ def cli(dest, env, src, excludes, verbose, watch):
         env = config.get('env', {})
         watch = config.get('watch', watch)
         verbose = config.get('verbose', verbose)
+    if env:
+        env = context_from_file(env)
     render(src, dest, env, excludes)
     if watch:
         handler = JinjaFileEventHandler(dest, env, excludes, verbose)

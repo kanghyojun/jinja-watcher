@@ -24,7 +24,7 @@ def context_from_file(filename):
     config = {}
     with open(filename) as context_file:
         exec(compile(context_file.read(), filename, 'exec'), config)
-    return dict((k, v) for k, v in config.items())
+        return dict((k, v) for k, v in config.items() if k.isupper())
 
 
 def find_templates(path):
@@ -33,7 +33,8 @@ def find_templates(path):
             root_without_par = os.path.join(root.replace(path, ''))
             if root_without_par.startswith('/'):
                 root_without_par = root_without_par[1:]
-            yield os.path.join(root_without_par, tempname)
+            if tempname.endswith('.html'):
+                yield os.path.join(root_without_par, tempname)
 
 
 def render(path, out=None, context={}, excludes=[]):
@@ -46,5 +47,5 @@ def render(path, out=None, context={}, excludes=[]):
         out_file = os.path.join(out, template)
         ensure_directory(os.path.dirname(out_file))
         with open(out_file, 'w') as f:
-            if not template in excludes and template.endswith('.html'):
+            if not template in excludes:
                 f.write(temp.render(context))
