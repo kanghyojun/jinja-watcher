@@ -24,8 +24,8 @@ def cli(dest, env, src, excludes, verbose, watch):
         config = read_from_json(src)
         src = config['src']
         dest = config.get('dest', dest)
-        excludes = config.get('excludes', [])
-        env = config.get('env', {})
+        excludes = config.get('excludes', excludes)
+        env = config.get('env', env)
         watch = config.get('watch', watch)
         verbose = config.get('verbose', verbose)
     if env:
